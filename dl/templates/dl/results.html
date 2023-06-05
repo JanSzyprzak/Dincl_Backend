@@ -1,0 +1,19 @@
+{% extends "dl/base.html" %}
+
+{% block content %}
+
+  <h1>Wyniki Ankiety</h1>
+
+  <p>Twoja identyfikacja z wybraną grupą: {{ averages.avg_identification_with_group }}</p>
+  <p>Twoja identyfikacja z mniejszością/mniejszościami w wybranej grupie: {{ averages.avg_identification_with_minority }}</p>
+  <p>Zróżnicowanie wybranej grupy: {{ averages.avg_group_diversity }}</p>
+  <p>Łatwość dołączenia do wybranej grupy: {{ averages.avg_ease_of_joining }}</p>
+  <p>Uczciwość zasad w wybranej grupie: {{ averages.avg_rule_fairness }}</p>
+  <p>Uczestniczenie mniejszości w życiu wybranej grupy: {{ averages.avg_minority_participation_in_life }}</p>
+  <p>Uczestniczenie mniejszości w decyzjach wybranej grupy: {{ averages.avg_minority_participation_in_decisions }}</p>
+  <p>Wykorzystanie potencjału mniejszości w wybranej grupie: {{ averages.avg_minority_potential_utilization }}</p>
+  <p>Twoje poczucie bezpieczeństwa w wybranej grupie: {{ averages.avg_personal_security_feeling }}</p>
+  <p>Poczucie bezpieczeństwa mniejszości w wybranej grupie: {{ averages.avg_minority_security_feeling }}</p>
+
+{% endblock %}
+
