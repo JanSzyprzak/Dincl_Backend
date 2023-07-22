@@ -4,7 +4,7 @@ from django.shortcuts import render
 from .forms import SurveyForm, SurveyQueryForm
 from django.db.models import Avg
 from .models import Survey
-
+from django.db.models import Count
 
 
 
@@ -61,6 +61,12 @@ def survey_query(request):
 
 
 
+def top_voivodships(request):
+    # Count the number of surveys per voivodship and order by the count
+    voivodship_counts = Survey.objects.values('voivodship').annotate(num_surveys=Count('voivodship')).order_by('-num_surveys')[:5]
+
+    # Return a render object with the list of top voivodships
+    return render(request, 'dl/top_voivodships.html', {'voivodship_counts': voivodship_counts})
 
 
 

@@ -1,0 +1,13 @@
+
+
+
+{% extends "dl/base.html" %}
+
+{% block content %}
+  <h1>Top Voivodships</h1>
+  <ul>
+  {% for item in voivodship_counts %}
+    <li>{{ item.voivodship }}: {{ item.num_surveys }}</li>
+  {% endfor %}
+  </ul>
+{% endblock %}
