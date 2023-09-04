@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
+
 
 class Survey(models.Model):
     AGE_CHOICES = [("<18", _("<18")), ("18-40", _("18-40")), ("41-60", _("41-60")), (">60", _(">60"))]
@@ -27,4 +29,9 @@ class Survey(models.Model):
     personal_security_feeling = models.IntegerField(choices=RATING_CHOICES, verbose_name=_('Twoje poczucie bezpieczeństwa w wybranej grupie'))
     minority_security_feeling = models.IntegerField(choices=RATING_CHOICES, verbose_name=_('Poczucie bezpieczeństwa mniejszości w wybranej grupie'))
 
-    timestamp = models.DateTimeField(auto_now_add=True)
+    #timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(default=timezone.now)
+
+
+class Visit(models.Model):
+    count = models.IntegerField(default=0)
