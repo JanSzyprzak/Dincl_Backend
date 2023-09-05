@@ -7,6 +7,7 @@ from django.db.models import Count
 from datetime import timedelta
 from dateutil.relativedelta import relativedelta
 from django.utils import timezone
+from rest_framework import status
 
 class SurveyViewset(ModelViewSet):
     queryset = Survey.objects.all()
@@ -90,3 +91,16 @@ def register_visit(request):
     
     serializer = VisitSerializer(visit)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+def create_survey(request):
+    if request.method == 'POST':
+        serializer = SurveySerializer(data=request.data)
+        print(request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
