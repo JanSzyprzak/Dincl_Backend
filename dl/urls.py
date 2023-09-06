@@ -1,5 +1,5 @@
 from django.urls import path
-from .api_views import SurveyViewset, create_survey, register_visit, top_five_weekly_voivodeships, top_five_monthly_voivodeships, number_of_all_surveys, number_of_top5monthly_surveys, number_of_top5weekly_surveys
+from .api_views import SurveyViewset, fetch_survey_data, create_survey, register_visit, top_five_weekly_voivodeships, top_five_monthly_voivodeships, number_of_all_surveys, number_of_top5monthly_surveys, number_of_top5weekly_surveys
 from . import views
 
 app_name = "dl"
@@ -15,6 +15,6 @@ urlpatterns = [
     path('api/v1/top5_monthly_count', number_of_top5monthly_surveys, name='number_of_top5monthly_surveys'),
     path('api/v1/register-visit/', register_visit, name='register_visit'),
     path('api/v1/create-survey/', create_survey, name='create-survey'),
-
+    path('fetch_survey_data/', fetch_survey_data, name='fetch_survey_data'),
     
      ]

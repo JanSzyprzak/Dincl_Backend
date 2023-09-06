@@ -104,3 +104,28 @@ def create_survey(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
+@api_view(['POST'])
+def fetch_survey_data(request):
+    if request.method == 'POST':
+        age = request.data.get('age')
+        gender = request.data.get('gender')
+        voivodship = request.data.get('voivodship')
+        city_size = request.data.get('city_size')
+        group = request.data.get('group')
+
+        # Query the database for matching data
+        matched_data = Survey.objects.filter(
+            age=age, 
+            gender=gender, 
+            voivodship=voivodship,
+            city_size=city_size,
+            group=group
+        )
+
+        # Serialize the data for the response
+        
+        serialized_data = SurveySerializer(matched_data, many=True).data
+
+        return Response(serialized_data, status=status.HTTP_200_OK)
+
+    return Response({"detail": "Invalid request method."}, status=status.HTTP_405_METHOD_NOT_ALLOWED)

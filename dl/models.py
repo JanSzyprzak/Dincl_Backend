@@ -29,7 +29,6 @@ class Survey(models.Model):
     personal_security_feeling = models.IntegerField(choices=RATING_CHOICES, verbose_name=_('Twoje poczucie bezpieczeństwa w wybranej grupie'))
     minority_security_feeling = models.IntegerField(choices=RATING_CHOICES, verbose_name=_('Poczucie bezpieczeństwa mniejszości w wybranej grupie'))
 
-    #timestamp = models.DateTimeField(auto_now_add=True)
     timestamp = models.DateTimeField(default=timezone.now)
 
 
