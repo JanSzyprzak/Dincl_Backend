@@ -15,6 +15,6 @@ urlpatterns = [
     path('api/v1/top5_monthly_count', number_of_top5monthly_surveys, name='number_of_top5monthly_surveys'),
     path('api/v1/register-visit/', register_visit, name='register_visit'),
     path('api/v1/create-survey/', create_survey, name='create-survey'),
-    path('fetch_survey_data/', fetch_survey_data, name='fetch_survey_data'),
+    path('api/v1/fetch_survey_data/', fetch_survey_data, name='fetch_survey_data'),
     
      ]

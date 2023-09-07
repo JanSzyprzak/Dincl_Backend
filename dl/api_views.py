@@ -8,6 +8,8 @@ from datetime import timedelta
 from dateutil.relativedelta import relativedelta
 from django.utils import timezone
 from rest_framework import status
+from django.db.models import Count
+from django.db.models import Avg
 
 class SurveyViewset(ModelViewSet):
     queryset = Survey.objects.all()
@@ -104,28 +106,44 @@ def create_survey(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
+
+
 @api_view(['POST'])
 def fetch_survey_data(request):
     if request.method == 'POST':
-        age = request.data.get('age')
-        gender = request.data.get('gender')
-        voivodship = request.data.get('voivodship')
-        city_size = request.data.get('city_size')
-        group = request.data.get('group')
+        # List of fields to check in the request
+        available_fields = ['age', 'gender', 'voivodship', 'city_size', 'group']
 
-        # Query the database for matching data
-        matched_data = Survey.objects.filter(
-            age=age, 
-            gender=gender, 
-            voivodship=voivodship,
-            city_size=city_size,
-            group=group
-        )
+        # List of fields to calculate averages
+        avg_fields = [
+            'identification_with_group',
+            'identification_with_minority',
+            'group_diversity',
+            'ease_of_joining',
+            'rule_fairness',
+            'minority_participation_in_life',
+            'minority_participation_in_decisions',
+            'minority_potential_utilization',
+            'personal_security_feeling',
+            'minority_security_feeling'
+        ]
 
-        # Serialize the data for the response
-        
-        serialized_data = SurveySerializer(matched_data, many=True).data
+        # Build a filter dictionary from provided data
+        filters = {field: request.data.get(field) for field in available_fields if request.data.get(field) is not None}
 
-        return Response(serialized_data, status=status.HTTP_200_OK)
+        # Build the aggregate dictionary
+        aggregation = {field: Avg(field) for field in avg_fields}
+
+        # Query the database with the built filter dictionary and aggregate
+        avg_data = Survey.objects.filter(**filters).aggregate(**aggregation)
+
+        for key, value in avg_data.items():
+            if value is not None:
+                avg_data[key] = round(float(value), 2)
+
+        print(avg_data)
+
+        return Response(avg_data, status=status.HTTP_200_OK)
 
     return Response({"detail": "Invalid request method."}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
