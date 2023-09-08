@@ -56,3 +56,4 @@ xdg==5
 zipp==1.0.0
 gunicorn==21.2.0
 python-dateutil==2.8.2
+python_dotenv==1.0.0
